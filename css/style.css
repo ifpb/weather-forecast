@@ -1,0 +1,202 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+body{
+  background: #82b1ff;
+  transition: background 2s;
+}
+
+.container{
+  padding: 20px;
+  width: 90%;
+  margin: auto;
+}
+
+@media (min-width: 550px) {
+  .container{
+    width: 500px;
+  }
+
+  header{
+    height: 100px;
+  }
+
+  header > h1{
+    margin-top: 35px;
+  }
+}
+
+@media (min-width: 650px){
+  .container{
+    width: 600px;
+  }
+}
+
+
+
+header{
+  width: 100%;
+}
+
+header > h1{
+  padding-left: 30px;
+  font-size: 3.5em;
+  font-weight: bolder;
+  color: #fff;
+  display: block;
+}
+
+main{
+  width: 100%;
+}
+
+main > .pesquisa{
+  width: 100%;
+  display: flex;
+  padding-bottom: 100px;
+  border-bottom: 2px solid white;
+}
+
+#citysearch{
+  width: 85%;
+  height: 3em;
+  padding-left: 1em;
+  box-sizing: border-box;
+  vertical-align: middle;
+  margin: 0;
+  border: #212121 1px solid;
+  border-right: none;
+}
+
+#citysearch:focus{
+  border: #212121 1px solid;
+  border-right: none;
+}
+
+#citysubmit{
+  width: 10%;
+  height: 3em;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  background-color: white;
+  border: #212121 1px solid;
+  border-left: none;
+}
+
+.cidade_result{
+  width: 95%;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 20px 50px 20px 50px;
+  box-sizing: border-box;
+  color: #404040;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 570px)
+{
+  .cidade_result{
+    padding: 10px;
+  }
+}
+
+.cidade_result .text_result_city{
+  font-weight:  bolder;
+  font-size: 0.8em;
+  display: inline-block;
+  margin-bottom: 25px;
+}
+
+.cidade_result .clima_icon{
+  display: inline_block;
+  height: 60px;
+  float: right;
+}
+
+.cidade_result .text_result_temp{
+  font-size: 2.6em;
+  font-weight: bolder;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.cidade_result .text_result_info{
+  display: inline-block;
+  width: 40%;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+.cidade_result table{
+  padding: 10px;
+  margin-top: 20px;
+  width: 100%;
+  text-align: left;
+  border-top: 3px solid  #404040;
+}
+
+
+.cidade_result .text_result_info em{
+  font-weight: bold;
+  font-style: normal;
+}
+
+main > .capitais{
+  margin-top: 30px;
+}
+
+main > .capitais > h2{
+  padding-left: 20px;
+  font-size: 2em;
+  color: #fff;
+}
+
+main > .capitais > .cap_table{
+  margin-top: 20px;
+}
+
+.cap_table{
+  text-align: left;
+  color: #212121;
+}
+
+.cap_table table thead  th{
+  font-weight: normal;
+
+}
+
+.cap_table table thead{
+    display: block;
+}
+
+.cap_table table tbody{
+  display: block;
+  font-weight: bold;
+  font-size: 1.3em;
+  margin-top: 10px;
+}
+
+.cap_table .table_info{
+  width: 50px;
+}
+
+.clima_fechado
+{
+  background: linear-gradient(to top, #9d9d9d 43%,#3e50b4 100%);
+  transition: background 1s;
+}
+
+.clima_nublado
+{
+  background: linear-gradient(to bottom, #9d9d9d 5%,#2095f2 100%);
+  transition: background 1s;
+}
+
+.clima_aberto
+{
+  background: linear-gradient(45deg, #2095f2 31%,#2095f2 55%,#fec107 100%);
+  transition: background 1s;
+}
