@@ -110,11 +110,13 @@ main > .pesquisa{
   margin-bottom: 25px;
 }
 
-.cidade_result .clima_icon{
+.clima_icon{
   display: inline_block;
   height: 60px;
   float: right;
 }
+
+
 
 .cidade_result .text_result_temp{
   font-size: 2.6em;
@@ -134,9 +136,10 @@ main > .pesquisa{
   padding: 10px;
   margin-top: 20px;
   width: 100%;
-  text-align: left;
+  text-align: center;
   border-top: 3px solid  #404040;
 }
+
 
 
 .cidade_result .text_result_info em{
