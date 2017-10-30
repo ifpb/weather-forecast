@@ -12,14 +12,12 @@ botaoPesquisar.addEventListener("click", function(event){
   event.preventDefault()
   inputCidade = inputfield.value
   inputCidade = inputCidade.replace(/\s/g,'+')
-  let url = `https://api.weatherbit.io/v2.0/current?city=${inputCidade}&lang=pt&key=${apikey}`
   let urlForecast = `https://api.weatherbit.io/v2.0/forecast/3hourly?city=${inputCidade}&lang=pt&key=${apikey}`
 
   fetch(urlForecast)
   .then(values => values.json())
   .then(function(values){
 
-    //values = values.data[0]
     console.log(values.city_name)
 
     result.innerHTML = '' //SOCORRO GAMBIARRA!!!
@@ -49,7 +47,7 @@ let geraRESHTML = function(values)
   resultChilds.push(geraInfosCidade(`<em>MIN:</em> 16º  <em>MAX:</em> 25º`, "text_result_info"))
   resultChilds.push(geraInfosCidade(` Sensação <em>${info.app_temp}ºC</em>`, "text_result_info"))
   resultChilds.push(geraInfosCidade(`Vento <em>${info.wind_spd}m/s</em>`, "text_result_info"))
-  resultChilds.push(geraInfosCidade(`Humidade <em>${info.rh}%</em>`, "text_result_info"))
+  resultChilds.push(geraInfosCidade(`Umidade <em>${info.rh}%</em>`, "text_result_info"))
 
   resultChilds.push(geraTableForecast(values))
 
@@ -90,13 +88,11 @@ function geraTableForecast(values)
   let thead_tr = document.createElement('tr')
   let tbody_tr = document.createElement('tr')
 
-  console.log(values.data[1])
-  console.log("Data de hoje:" + hoje)
   for(let i = 1; i <= 5; i++)
   {
     let Hcel = document.createElement('th')
     let Bcel = document.createElement('td')
-    Hcel.textContent = getDiaSemana( (hoje + i) > 6 ? (hoje + i)%6 - 1 : (hoje + i) )
+    Hcel.textContent = getDiaSemana( (hoje + i) > 6 ? (hoje + i)%6 - 1 : (hoje + i) ) //SOCORRO GAMBIARRA!!
     thead_tr.appendChild(Hcel)
     Bcel.innerHTML =  ` <img class="clima_icon" src= icons/${values.data[i].weather.icon}.png> </img> `
     tbody_tr.appendChild(Bcel)
