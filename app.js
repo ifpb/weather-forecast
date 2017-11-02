@@ -12,39 +12,31 @@ botaoPesquisar.addEventListener("click", function(event){
   event.preventDefault()
   inputCidade = inputfield.value
   inputCidade = inputCidade.replace(/\s/g,'+')
-  let url = `https://api.weatherbit.io/v2.0/current?city=${inputCidade}&lang=pt&key=${apikey}`
   let urlForecast = `https://api.weatherbit.io/v2.0/forecast/3hourly?city=${inputCidade}&lang=pt&key=${apikey}`
-  let urlCapitaisTable = `https://api.weatherbit.io/v2.0/forecast/3hourly?&lang=pt&key=${apikey}&cities=3390760,3451190,3448439,3470127`
-  console.log(url)
 
-// TRECHO DE TESTE SEM REQUISIÇÃO http
-/*
-values = {"data":[{"rh":51,"pod":"d","pres":1008,"timezone":"America\/Fortaleza","weather":{"icon":"c02d","code":"700","description":"Poucas nuvens"},"country_code":"BR","clouds":25,"ts":1506513600,"wind_spd":2.6,"wind_cdir_full":"Sudeste","app_temp":31.43,"lon":-42.71,"state_code":"20","vis":10,"slp":1014,"h_angle":-30,"dewpt":18.93,"precip":null,"uv":4,"sunset":"20:46","elev_angle":49,"station":"SBTE","dhi":678.6,"city_name":"Joao Pessoa","lat":-3.89333,"sunrise":"08:37","datetime":"2017-09-27:12","temp":30.18,"ob_time":"2017-09-27 12:00","wind_dir":140,"wind_cdir":"SL"}],"count":1}
-*/
-//FIM TRECHO TESTE
-
-  fetch(url)
+  fetch(urlForecast)
   .then(values => values.json())
   .then(function(values){
 
-    values = values.data[0]
     console.log(values.city_name)
 
     result.innerHTML = '' //SOCORRO GAMBIARRA!!!
     result.appendChild(geraRESHTML(values))
-    alteraBg(values)
+    alteraBg(values.data[0])
     form.reset()
     inputfield.blur()
   }) //FIM DO FETCH
 })
 
-let geraRESHTML = function(info)
+let geraRESHTML = function(values)
 {
+
+  let info = values.data[0]
   let result = document.createElement('div')
   result.classList.add("cidade_result")
   let resultChilds = []
 
-  resultChilds.push(geraInfosCidade(`${info.city_name}, ${info.state_code} - ${info.country_code}`, "text_result_city"))
+  resultChilds.push(geraInfosCidade(`${values.city_name}, ${values.state_code} - ${values.country_code}`, "text_result_city"))
 
   let img = document.createElement('img')
   img.src = `icons/${info.weather.icon}.png`
@@ -55,10 +47,12 @@ let geraRESHTML = function(info)
   resultChilds.push(geraInfosCidade(`<em>MIN:</em> 16º  <em>MAX:</em> 25º`, "text_result_info"))
   resultChilds.push(geraInfosCidade(` Sensação <em>${info.app_temp}ºC</em>`, "text_result_info"))
   resultChilds.push(geraInfosCidade(`Vento <em>${info.wind_spd}m/s</em>`, "text_result_info"))
-  resultChilds.push(geraInfosCidade(`Humidade <em>${info.rh}%</em>`, "text_result_info"))
+  resultChilds.push(geraInfosCidade(`Umidade <em>${info.rh}%</em>`, "text_result_info"))
+
+  resultChilds.push(geraTableForecast(values))
 
   resultChilds.forEach(child => result.appendChild(child))
-  console.log(result)
+
   return result
 }
 
@@ -73,13 +67,63 @@ function geraInfosCidade(dado, classe)
 
 function alteraBg(info)
 {
-  document.body.classList.value = '' 
+  document.body.classList.value = ''
   if(info.weather.code < 800)
     document.body.classList.add('clima_fechado')
   else if(info.weather.code > 800)
       document.body.classList.add('clima_nublado')
   else {
         document.body.classList.add('clima_aberto')
+  }
+
+}
+
+
+function geraTableForecast(values)
+{
+  let hoje = new Date().getDay()
+  let table = document.createElement('table')
+  let thead = document.createElement('thead')
+  let tbody = document.createElement('tbody')
+  let thead_tr = document.createElement('tr')
+  let tbody_tr = document.createElement('tr')
+
+  for(let i = 1; i <= 5; i++)
+  {
+    let Hcel = document.createElement('th')
+    let Bcel = document.createElement('td')
+    Hcel.textContent = getDiaSemana( (hoje + i) > 6 ? (hoje + i)%6 - 1 : (hoje + i) ) //SOCORRO GAMBIARRA!!
+    thead_tr.appendChild(Hcel)
+    Bcel.innerHTML =  ` <img class="clima_icon" src= icons/${values.data[i].weather.icon}.png> </img> `
+    tbody_tr.appendChild(Bcel)
+  }
+
+  thead.appendChild(thead_tr)
+  tbody.appendChild(tbody_tr)
+  table.appendChild(thead)
+  table.appendChild(tbody)
+
+  return table
+}
+
+function getDiaSemana(num)
+{
+  switch(num)
+  {
+    case 0:
+      return "Dom"
+    case 1:
+      return "Seg"
+    case 2:
+      return "Ter"
+    case 3:
+      return "Qua"
+    case 4:
+      return "Quin"
+    case 5:
+      return "Sex"
+    case 6:
+      return "sab"
   }
 
 }
